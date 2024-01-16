@@ -33,12 +33,8 @@ function circlePropApp() {
 	const drawBisectCircle = function(axis, y, args) {
 		style = {lineWidth: 1, strokeStyle: b2};
 		mergeArgs(style, args);
-		if (Math.abs(y) < 0.005) {
-			axis.line(-1, 0, 1, 0, style);
-		} else {
-			const R = Math.sqrt(y**2 + 1)
-			axis.strokeCircle(0, y, R, style);
-		}
+		const R = Math.sqrt(y**2 + 1)
+		axis.strokeCircle(0, y, R, style);
 	}
 
 	const alArr = linRange(0.1, 0.9, 8);
