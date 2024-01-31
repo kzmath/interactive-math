@@ -16,7 +16,7 @@ function complexMappingApp() {
 		ax2.setLimits(-R2, R2, -R2, R2);
 	}
 
-	app.setAxes(1.5, 1.5);
+	app.setAxes(1.5, 1.2*Math.PI);
 	app.R = 3;
 	app.gN = 15;
 	app.N = 201;
