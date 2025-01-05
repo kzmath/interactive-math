@@ -75,7 +75,7 @@ function complexMappingExp() {
 
 		ax1.strokePathArr(xMesh, { strokeStyle: b1 });
 		ax1.strokePathArr(yMesh, { strokeStyle: b2 });
-		ax1.strokePath(hline, { strokeStyle: c3, lineWidth: 3 });
+		ax1.strokePath(hline, { strokeStyle: c3, lineWidth: 3, alpha: 0.1 });
 		ax1.strokePath(vline, { strokeStyle: c4, lineWidth: 3 });
 
 		ax1.endClip();

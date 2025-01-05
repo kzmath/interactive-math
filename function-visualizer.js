@@ -9,7 +9,7 @@
 // Projection matrix for 3D to 2D
 const projectionMatrix = [
     [1, -1, 0],  // x' = x - y
-    [0, -1, 1]   // y' = -y + z
+    [0, -1/2, 1]   // y' = -y + z
 ];
 
 // Function to project 3D points to 2D
@@ -44,9 +44,9 @@ function draw3DAxes(axis) {
 
     const projectedAxes = project3DPathArr(axes3D);
 
-    axis.strokePath(projectedAxes[0], { strokeStyle: "red", lineWidth: 2 });   // x-axis
-    axis.strokePath(projectedAxes[1], { strokeStyle: "green", lineWidth: 2 }); // y-axis
-    axis.strokePath(projectedAxes[2], { strokeStyle: "blue", lineWidth: 2 });  // z-axis
+    axis.strokePath(projectedAxes[0], { strokeStyle: "black", lineWidth: 2 });   // x-axis
+    axis.strokePath(projectedAxes[1], { strokeStyle: "black", lineWidth: 2 }); // y-axis
+    axis.strokePath(projectedAxes[2], { strokeStyle: "black", lineWidth: 2 });  // z-axis
 }
 
 // Function to map 2D grid to 3D using f(x, y)
@@ -75,7 +75,7 @@ function scalarMappingApp() {
     const margin = 15;
     const axSize = (width - 4 * margin) / 2;
 
-    const app = new C5({ width: width, height: axSize + 2 * margin });
+    const app = new C5({ width: width, height: axSize + 2 * margin});
 
     const ax1 = app.addAxis();
     ax1.setCrop(margin, margin, margin + axSize, margin + axSize);
@@ -166,7 +166,8 @@ function scalarMappingApp() {
 
         if (app.is3DMode) {
             // Adjust ax2 limits for better visual presentation in 3D mode
-            ax2.setLimits(-app.R, app.R, -app.R / 2, app.R);
+			const ax2R = app.R/2;
+            ax2.setLimits(-ax2R, ax2R, -ax2R / 2, ax2R);
 
             // Draw 3D axes in the right panel
             draw3DAxes(ax2);
@@ -179,9 +180,9 @@ function scalarMappingApp() {
             const xMeshProjected = project3DPathArr(xMesh3D);
             const yMeshProjected = project3DPathArr(yMesh3D);
 
-            // Draw the projected paths
-            ax2.strokePathArr(xMeshProjected, { strokeStyle: b1 });
-            ax2.strokePathArr(yMeshProjected, { strokeStyle: b2 });
+            // Draw the projected grid paths
+            ax2.strokePathArr(xMeshProjected, { strokeStyle: b1, alpha: 0.5 });
+            ax2.strokePathArr(yMeshProjected, { strokeStyle: b2, alpha: 0.5});
 
             // Map the horizontal and vertical lines to 3D
             const hline3D = map2DTo3D([hline], app.f)[0];
@@ -206,8 +207,8 @@ function scalarMappingApp() {
             ax2.drawDot(...BProjected, 6, { label: "f(B)", fillStyle: c4 });
         } else {
             // Map the horizontal and vertical lines to (0, f(x, y))
-            const hlineMapped = linRange2d([0, app.f(-app.R, A.y)], [0, app.f(app.R, A.y)], app.N);
-            const vlineMapped = linRange2d([0, app.f(B.x, -app.R)], [0, app.f(B.x, app.R)], app.N);
+            const hlineMapped = complexApply((x, y) => [0, app.f(x, y)], hline);
+            const vlineMapped = complexApply((x, y) => [0, app.f(x, y)], vline);
 
             // Draw the mapped lines
             ax2.strokePath(hlineMapped, { strokeStyle: c3, lineWidth: 3 });
