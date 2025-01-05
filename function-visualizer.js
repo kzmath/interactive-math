@@ -140,10 +140,10 @@ function scalarMappingApp() {
         app.setAxes(app.R, app.R);
 
         switch (app.functionName) {
-            case "linearMap": app.f = linearMap; break;
-            case "quadraticMap": app.f = quadraticMap; break;
-            case "cubicMap": app.f = cubicMap; break;
-            case "exponentialMap": app.f = exponentialMap; break;
+            case "linearMap": app.R = 3; app.f = linearMap; break;
+            case "quadraticMap": app.R = 3; app.f = quadraticMap; break;
+            case "cubicMap": app.R = 3; app.f = cubicMap; break;
+            case "exponentialMap": app.R = 6; app.f = exponentialMap; break;
         }
 
         ax1.beginClip();
