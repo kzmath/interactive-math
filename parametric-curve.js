@@ -28,7 +28,7 @@ function float2DApply(f, tRange) {
  * @returns {Array<number>} - A flattened array of 3D coordinates [x1, y1, z1, x2, y2, z2, ...].
  */
 function float3DApply(f, tRange) {
-    const result = [];
+    const result = []
     for (let i = 0; i < tRange.length; i++) {
         const [x, y] = f(tRange[i]);
         result.push(tRange[i], x, y); // [t, x, y]
@@ -160,7 +160,7 @@ function parametricCurveApp() {
     //app.addHTMLButton(app.katexM("f(t) = (\\sin(2t), \\sin(3t))"), () => { app.functionName = "lissajousMap" });
     //
     // Button to toggle 3D mode
-    app.addHTMLButton("Toggle 3D Mode", (app) => {
+    app.addHTMLButton("Toggle Graph Mode", (app) => {
         app.is3DMode = !app.is3DMode;
     });
 

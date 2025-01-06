@@ -132,7 +132,7 @@ function scalarMappingApp() {
     });
 
     // Button to toggle 3D mode
-    app.addHTMLButton("Toggle 3D Mode", (app) => {
+    app.addHTMLButton("Toggle Graph Mode", (app) => {
         app.is3DMode = !app.is3DMode;
     });
 
