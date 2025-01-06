@@ -96,6 +96,14 @@ function parametricSurface() {
     const B = ax1.addControlDot(0.5, 0, "B", { fillStyle: c4 });
 
     // Define the mapping functions
+	
+	const graphMapping = (u, v) => {
+		const x = u;
+		const y = v;
+		const z = (x*x + y*y)/2;
+		return [x, y, z];
+	};
+	
     const cylindricalMapping = (u, v) => {
         const x = u * Math.cos(v);
         const y = u * Math.sin(v);
@@ -120,6 +128,7 @@ function parametricSurface() {
     app.functionName = "cylindricalMapping";
 
     app.funcs = {
+        "graphMapping": { func: graphMapping, latex: "f(u, v) = (u, v, (u^2 + v^2)/2)" },
         "cylindricalMapping": { func: cylindricalMapping, latex: "f(u, v) = (u \\cos v, u \\sin v, u)" },
         "sphereMapping": { func: sphereMapping, latex: "f(u, v) = (\\cos u \\cos v, \\cos u \\sin v, \\sin u)" },
         "hyperboloidMapping": { func: hyperboloidMapping, latex: "f(u, v) = (\\cosh u \\cos v, \\cosh u \\sin v, \\sinh u)" }
@@ -130,9 +139,9 @@ function parametricSurface() {
     }
     app.setCaption("Mapping: " + app.katexM(app.funcs[app.functionName].latex));
 
-    app.addHTMLButton(app.katexM("f(u, v) = (u \\cos v, u \\sin v, u)"), () => { app.functionName = "cylindricalMapping" });
-    app.addHTMLButton(app.katexM("f(u, v) = (\\cos u \\cos v, \\cos u \\sin v, \\sin u)"), () => { app.functionName = "sphereMapping" });
-    app.addHTMLButton(app.katexM("f(u, v) = (\\cosh u \\cos v, \\cosh u \\sin v, \\sinh u)"), () => { app.functionName = "hyperboloidMapping" });
+	for (const k in app.funcs) {
+		app.addHTMLButton(app.katexM(app.funcs[k].latex), (app) => {app.functionName = k})
+	}
 
     app.addHTMLButton("Toggle Resolution", (app) => {
         if (app.gN == 15) { app.gN = 31; } else { app.gN = 15; }
@@ -142,6 +151,7 @@ function parametricSurface() {
         app.setAxes(app.R, app.R);
 
         switch (app.functionName) {
+            case "graphMapping": app.R = 3; app.f = graphMapping; break;
             case "cylindricalMapping": app.R = 3; app.f = cylindricalMapping; break;
             case "sphereMapping": app.R = Math.PI; app.f = sphereMapping; break;
             case "hyperboloidMapping": app.R = 2; app.f = hyperboloidMapping; break; // Adjusted R for hyperboloid
