@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('./lib/C5.js').C5} C5
+ */
+
 function clampToCircle(z, c, R) {
 	const d = norm2d(minus2d(z, c));
 	if (d == 0) return z;
