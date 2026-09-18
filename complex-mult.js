@@ -12,21 +12,23 @@ function complexMultApp() {
 	c1 = C5.CS[0];
 	c2 = C5.CS[1];
 	c3 = C5.CS[2];
-	const z = axis.addControlDot(1, 0, "z", {fillStyle: c1});
+	const z = axis.addControlDot(1/Math.sqrt(2), 1/Math.sqrt(2), "z", {fillStyle: c1});
 	const w = axis.addControlDot(0, 1, "w", {fillStyle: c2});
-	app.clampZ = true;
-	app.clampW = true;
+	app.clampZ = false;
+	app.clampW = false;
+
+	const caption= "Move $z$ or $w$ to see changes in $zw$. The movement is constrained to the unit circle $|z| = 1$ when clamped."
+	app.setCaption(convertTeX(caption))
 
 	app.draw = function() {
 		axis.axisGrid();
 
 		if (app.clampZ) [z.x, z.y] = mapToUnit2d([z.x, z.y]);
 		if (app.clampW) [w.x, w.y] = mapToUnit2d([w.x, w.y]);
-		if (app.clampZ || app.clampW) axis.strokeCircle(0, 0, 1);
+		axis.strokeCircle(0, 0, 1);
 
 		axis.strokePath([0, 0, z.x, z.y], {strokeStyle: c1});
 		axis.strokePath([0, 0, w.x, w.y], {strokeStyle: c2});
-
 		let zw = complexMult([z.x, z.y], [w.x, w.y]);
 		axis.strokePath([0, 0, zw[0], zw[1]], {strokeStyle: c3});
 		axis.drawDot(zw[0], zw[1], 6, {label: "zw", fillStyle: c3});

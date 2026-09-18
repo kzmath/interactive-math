@@ -11,8 +11,11 @@ function complexRootsApp() {
 
 	c1 = C5.CS[0];
 	const z = axis.addControlDot(0, 1, "z", {fillStyle: c1});
+
+	const caption= "Move $z$  see changes in the roots, use slider to change number of roots. Movement is restricted to the unit circle when clamped, unclamp to move freely."
+	app.setCaption(convertTeX(caption))
 	
-	let clamp = true;
+	let clamp = false;
 	let n = 3;
 
 	app.draw = function() {
